@@ -13,7 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/app/schemas/auth";
-import z from "zod";
+import z, { email } from "zod";
+import { authClient } from "@/lib/auth-client";
 
 export function SignupForm({
   className,
@@ -27,7 +28,12 @@ export function SignupForm({
       password: "",
     },
   });
-  function onSubmit(data: z.infer<typeof signUpSchema>) {
+  async function onSubmit(data: z.infer<typeof signUpSchema>) {
+    await authClient.signUp.email({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    });
     console.log(data);
   }
   return (
@@ -43,7 +49,7 @@ export function SignupForm({
             Fill in the form below to create your account
           </p>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-y-5">
           <Controller
             name="name"
             control={form.control}
@@ -55,7 +61,7 @@ export function SignupForm({
                   type="text"
                   placeholder="John Doe"
                   {...field}
-                  aria-invalid={fieldState.error ? "true" : "false"}
+                  aria-invalid={fieldState.invalid}
                 />
                 {fieldState.error && (
                   <FieldDescription className="text-destructive">
@@ -76,7 +82,7 @@ export function SignupForm({
                   type="email"
                   placeholder="m@example.com"
                   {...field}
-                  aria-invalid={fieldState.error ? "true" : "false"}
+                  aria-invalid={fieldState.invalid}
                 />
                 {fieldState.error && (
                   <FieldDescription className="text-destructive">
@@ -96,7 +102,7 @@ export function SignupForm({
                   id="password"
                   type="password"
                   {...field}
-                  aria-invalid={fieldState.error ? "true" : "false"}
+                  aria-invalid={fieldState.invalid}
                 />
                 {fieldState.error && (
                   <FieldDescription className="text-destructive">
