@@ -15,6 +15,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/app/schemas/auth";
 import z, { email } from "zod";
 import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { Loader2 } from "lucide-react";
 
 export function SignupForm({
   className,
@@ -28,14 +33,27 @@ export function SignupForm({
       password: "",
     },
   });
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   async function onSubmit(data: z.infer<typeof signUpSchema>) {
-    await authClient.signUp.email({
-      name: data.name,
-      email: data.email,
-      password: data.password,
+    startTransition(async () => {
+      await authClient.signUp.email({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Signed up successfully");
+            router.push("/");
+          },
+          onError: () => {
+            toast.error("Error signing up");
+          },
+        },
+      });
     });
-    console.log(data);
   }
+
   return (
     <form
       onSubmit={form.handleSubmit(onSubmit)}
@@ -114,7 +132,16 @@ export function SignupForm({
           />
 
           <Field>
-            <Button type="submit">Create Account</Button>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? (
+                <>
+                  <Loader2 className="animate-spin" />
+                  <span className="ml-2">Creating account...</span>
+                </>
+              ) : (
+                "Create Account"
+              )}
+            </Button>
           </Field>
         </div>
         <FieldSeparator>Or continue with</FieldSeparator>
@@ -129,7 +156,7 @@ export function SignupForm({
             Sign up with GitHub
           </Button>
           <FieldDescription className="px-6 text-center">
-            Already have an account? <a href="#">Sign in</a>
+            Already have an account? <Link href="/auth/login">Sign in</Link>
           </FieldDescription>
         </Field>
       </FieldGroup>

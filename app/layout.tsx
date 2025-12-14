@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { ConvexClientProvider } from "../components/web/ConvexClientProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,16 +30,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <main className="max-w-8xl mx-auto w-full px-4 md:px-6">
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <main className="max-w-8xl mx-auto w-full px-4 md:px-6">
             <ConvexClientProvider>{children}</ConvexClientProvider>
-          </ThemeProvider>
-        </main>
+            <Toaster />
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );
