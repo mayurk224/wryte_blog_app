@@ -1,0 +1,68 @@
+<div className="rounded-lg border p-4 space-y-4">
+            {/* Section Header */}
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold">Section</h3>
+              <div className="flex items-center gap-2">
+                {/* <AddComponent /> */}
+                <Button variant="outline" size="icon">
+                  <Trash className="h-4 w-4 text-red-500" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Heading */}
+            <div className="space-y-2">
+              <Label>Heading</Label>
+              <Input placeholder="Heading" />
+            </div>
+
+            {/* Body */}
+            <div className="space-y-2">
+              <Label>Body</Label>
+              <Textarea rows={4} placeholder="Write body content..." />
+            </div>
+
+            {/* Blockquote */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label>Blockquote</Label>
+                <Button variant="ghost" size="icon">
+                  <MinusCircle className="h-4 w-4 text-red-500" />
+                </Button>
+              </div>
+              <Textarea rows={2} placeholder="Blockquote..." />
+            </div>
+
+            {/* List */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label>List</Label>
+                <Button variant="ghost" size="icon">
+                  <MinusCircle className="h-4 w-4 text-red-500" />
+                </Button>
+              </div>
+              <Textarea rows={2} placeholder="List items..." />
+            </div>
+
+            {/* Picture */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label>Picture</Label>
+                <Button variant="ghost" size="icon">
+                  <MinusCircle className="h-4 w-4 text-red-500" />
+                </Button>
+              </div>
+              <Input type="file" />
+            </div>
+
+            {/* Paragraph */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label>Paragraph</Label>
+                <Button variant="ghost" size="icon">
+                  <MinusCircle className="h-4 w-4 text-red-500" />
+                </Button>
+              </div>
+              <Textarea rows={2} placeholder="Paragraph content..." />
+            </div>
+          </div>

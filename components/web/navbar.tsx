@@ -71,7 +71,12 @@ export function Navbar() {
         {isLoading ? null : isAuthenticated ? (
           <>
             <div className="">
-              <Button variant="secondary">Create</Button>
+              <Link
+                href="/create"
+                className={buttonVariants({ variant: "secondary" })}
+              >
+                Create
+              </Link>
             </div>
             <Button
               variant="secondary"
