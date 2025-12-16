@@ -1,10 +1,14 @@
-import { Navbar } from "@/components/web/navbar"
+import { Navbar } from "@/components/web/navbar";
 
-export default function SharedLayout({children}: {children: React.ReactNode}) {
-    return(
-        <div>
-            <Navbar />
-            {children}
-        </div>  
-    )
+export default function SharedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <Navbar />
+      <div className="container mx-auto">{children}</div>
+    </div>
+  );
 }
