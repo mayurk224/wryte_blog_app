@@ -1,0 +1,31 @@
+"use server";
+
+import z from "zod";
+import { postSchema } from "./schemas/blog";
+import { api } from "@/convex/_generated/api";
+import { fetchMutation } from "convex/nextjs";
+import { redirect } from "next/navigation";
+import { getToken } from "@/lib/auth-server";
+
+export async function createBlogAction(values: z.infer<typeof postSchema>) {
+  const parsed = postSchema.safeParse(values);
+  if (!parsed.success) {
+    throw new Error("Something went wrong");
+  }
+  const token = await getToken();
+  if (!token) {
+    throw new Error("User not found");
+  }
+
+  await fetchMutation(
+    api.posts.createPost,
+    {
+      body: parsed.data.body,
+      title: parsed.data.title,
+    },
+    {
+      token,
+    }
+  );
+  return redirect("/");
+}
