@@ -3,7 +3,7 @@ import Link from "next/link";
 export function BlogCard({ post }: { post: any }) {
   const { title, body, _id } = post;
   return (
-    <div className="max-w-sm mt-8" key={_id}>
+    <div className="max-w-sm" key={_id}>
       <div className=" bg-muted/30 rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 p-2">
         {/* Image Container with Badge */}
         <div className="relative">

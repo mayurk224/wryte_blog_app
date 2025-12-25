@@ -38,7 +38,7 @@ export function Navbar() {
     },
   ];
   return (
-    <nav className="flex justify-between items-center p-4 ">
+    <nav className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 z-50 backdrop-blur-md">
       <div className="leftSide flex items-center gap-3">
         <Link href="/">
           <div className="flex items-center">
@@ -51,7 +51,7 @@ export function Navbar() {
             <Link
               key={item.name}
               href={item.href}
-              className={buttonVariants({ variant: "link" })}
+              className="text-muted-foreground hover:text-primary data-[active=true]:text-primary flex h-7 items-center justify-center px-4 text-center text-base font-medium transition-colors" data-active="false"
             >
               <span className="text-sm font-medium">{item.name}</span>
             </Link>
