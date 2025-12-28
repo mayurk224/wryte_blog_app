@@ -24,12 +24,12 @@ import { createBlogAction } from "@/app/actions";
 export default function CreatePage() {
   const [isPending, startTransition] = useTransition();
 
-  const mutation = useMutation(api.posts.createPost);
   const form = useForm({
     resolver: zodResolver(postSchema),
     defaultValues: {
       title: "",
       body: "",
+      image: undefined,
     },
   });
 
@@ -103,6 +103,34 @@ export default function CreatePage() {
                         {...field}
                         aria-invalid={fieldState.invalid}
                         className="resize-none h-[150px]"
+                      />
+                      {fieldState.error && (
+                        <FieldDescription className="text-destructive">
+                          {fieldState.error.message}
+                        </FieldDescription>
+                      )}
+                    </Field>
+                  )}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Controller
+                  name="image"
+                  control={form.control}
+                  render={({ field, fieldState }) => (
+                    <Field>
+                      <FieldLabel htmlFor="image">Image</FieldLabel>
+
+                      <Input
+                        id="image"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          field.onChange(file);
+                        }}
+                        aria-invalid={fieldState.invalid}
                       />
                       {fieldState.error && (
                         <FieldDescription className="text-destructive">
