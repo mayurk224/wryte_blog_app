@@ -1,14 +1,20 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function BlogCard({ post }: { post: any }) {
-  const { title, body, _id } = post;
+  const { title, body, _id, image } = post;
   return (
-    <div className="max-w-sm" key={_id}>
+    <div className="w-sm" key={_id}>
       <div className=" bg-muted/30 rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300 p-2">
         {/* Image Container with Badge */}
         <div className="relative">
-          <img
-            src="https://images.pexels.com/photos/35198886/pexels-photo-35198886.jpeg"
+          <Image
+            src={
+              image ||
+              "https://images.pexels.com/photos/35198886/pexels-photo-35198886.jpeg"
+            }
+            width={500}
+            height={300}
             alt="Blog Image"
             className="w-full h-56 object-cover rounded-2xl"
           />
