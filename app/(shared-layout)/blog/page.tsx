@@ -5,13 +5,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BlogCard } from "@/components/web/blogCard";
 import { api, components } from "@/convex/_generated/api";
@@ -19,6 +12,9 @@ import { fetchQuery } from "convex/nextjs";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
+
+export const dynamic = "force-static";
+export const revalidate = 10;
 
 export default function BlogPage() {
   const navLink = [

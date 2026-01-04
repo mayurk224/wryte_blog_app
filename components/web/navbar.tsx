@@ -18,7 +18,7 @@ export function Navbar() {
   const navLink = [
     {
       name: "Recent",
-      href: "/",
+      href: "/blog",
     },
     {
       name: "Technology",
@@ -51,7 +51,8 @@ export function Navbar() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-muted-foreground hover:text-primary data-[active=true]:text-primary flex h-7 items-center justify-center px-4 text-center text-base font-medium transition-colors" data-active="false"
+              className="text-muted-foreground hover:text-primary data-[active=true]:text-primary flex h-7 items-center justify-center px-4 text-center text-base font-medium transition-colors"
+              data-active="false"
             >
               <span className="text-sm font-medium">{item.name}</span>
             </Link>
