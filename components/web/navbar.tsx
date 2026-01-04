@@ -38,7 +38,7 @@ export function Navbar() {
     },
   ];
   return (
-    <nav className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 z-50 backdrop-blur-md">
+    <nav className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 z-50 backdrop-blur-md px-10 border-b">
       <div className="leftSide flex items-center gap-3">
         <Link href="/">
           <div className="flex items-center">
