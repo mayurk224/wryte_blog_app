@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { BlogBreadCrumb } from "@/components/web/blogBreadCrumb";
+import { CommentSection } from "@/components/web/CommentSection";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { fetchQuery } from "convex/nextjs";
@@ -116,8 +117,13 @@ export default async function PostIdRoute({ params }: PostIdRouteProps) {
           </ul>
         </div>
         <div className="w-[70%]">
-          <h2 className="text-3xl font-semibold mb-4">Introduction</h2>
-          <p>{post.body}</p>
+          <div className="">
+            <h2 className="text-3xl font-semibold mb-4">Introduction</h2>
+            <p>{post.body}</p>
+          </div>
+          <div className="">
+            <CommentSection />
+          </div>
         </div>
       </div>
     </div>
