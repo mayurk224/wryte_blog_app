@@ -11,16 +11,21 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from "../ui/field";
 import { Button } from "../ui/button";
 import { useParams } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import z from "zod";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useTransition } from "react";
+import { Avatar, AvatarImage } from "../ui/avatar";
+import { AvatarFallback } from "@radix-ui/react-avatar";
 
 export function CommentSection() {
-  const [isPending, startTransition] = useTransition();
   const params = useParams<{ postId: Id<"posts"> }>();
+  const data = useQuery(api.comments.getCommentsByPostId, {
+    postId: params.postId,
+  });
+  const [isPending, startTransition] = useTransition();
   const createComment = useMutation(api.comments.createComment);
   const form = useForm({
     resolver: zodResolver(commentSchema),
@@ -40,11 +45,14 @@ export function CommentSection() {
       }
     });
   }
+  if (data === undefined) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="py-10">
       <div className="flex items-center gap-2 mb-8">
         <h2 className="text-2xl font-semibold">Comments</h2>
-        <span className="px-2 py-1 bg-muted rounded-full">10</span>
+        <span className="px-2 py-1 bg-muted rounded-full">{data.length}</span>
       </div>
       <div className="space-y-4">
         <div className="flex items-center gap-2">
@@ -90,6 +98,29 @@ export function CommentSection() {
             )}
           </Button>
         </form>
+        {data?.map((comment) => (
+          <div key={comment._id} className="space-y-2">
+            <div className="flex items-center gap-2">
+              <Avatar className="size-10 shrink-0">
+                <AvatarImage
+                  src={`https://avatar.vercel.sh/${comment.authorName}`}
+                  alt={comment.authorName}
+                />
+                <AvatarFallback>
+                  {comment.authorName.slice(0, 2).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+
+              <div className="">
+                <h3 className="font-semibold">{comment.authorName}</h3>
+                <span className="text-sm text-muted-foreground">
+                  {new Date(comment._creationTime).toLocaleDateString()}
+                </span>
+              </div>
+            </div>
+            <p className="text-sm">{comment.body}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

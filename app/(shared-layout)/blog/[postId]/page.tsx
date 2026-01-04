@@ -23,6 +23,7 @@ interface PostIdRouteProps {
 export default async function PostIdRoute({ params }: PostIdRouteProps) {
   const { postId } = await params;
   const post = await fetchQuery(api.posts.getPostById, { postId });
+
   if (!post)
     return (
       <div className="flex flex-col items-center justify-center h-screen">
