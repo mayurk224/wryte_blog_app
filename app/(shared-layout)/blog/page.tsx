@@ -10,11 +10,13 @@ import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
 import { ChevronDown } from "lucide-react";
 import { Metadata } from "next";
+import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
+import { connection } from "next/server";
 import { Suspense } from "react";
 
-export const dynamic = "force-static";
-export const revalidate = 10;
+// export const dynamic = "force-static";
+// export const revalidate = 10;
 
 export const metadata: Metadata = {
   title: "Blogs - Latest Articles",
@@ -224,6 +226,9 @@ export default function BlogPage() {
 }
 
 async function LoadingBlog() {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("blog");
   const data = await fetchQuery(api.posts.getPosts);
   return (
     <div className="flex flex-wrap gap-5 w-full mx-auto">

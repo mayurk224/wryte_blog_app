@@ -8,7 +8,7 @@ export default function SharedLayout({
   return (
     <div className="">
       <Navbar />
-      <div className="container mx-auto pt-[75px] px-10">{children}</div>
+      <div className="container mx-auto pt-[75px] px-10 w-full">{children}</div>
     </div>
   );
 }

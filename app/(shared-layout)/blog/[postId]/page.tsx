@@ -55,7 +55,7 @@ export default async function PostIdRoute({ params }: PostIdRouteProps) {
       </div>
     );
   return (
-    <div className="">
+    <div className="w-full">
       <div className="flex items-center gap-5 py-5">
         <Link
           href="/blog"
