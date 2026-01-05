@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { BlogBreadCrumb } from "@/components/web/blogBreadCrumb";
 import { CommentSection } from "@/components/web/CommentSection";
+import { PostPresence } from "@/components/web/PostPresence";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { getToken } from "@/lib/auth-server";
 import { fetchQuery, preloadQuery } from "convex/nextjs";
 import {
   ArrowLeft,
@@ -34,9 +36,11 @@ export async function generateMetadata({
 
 export default async function PostIdRoute({ params }: PostIdRouteProps) {
   const { postId } = await params;
-  const [post, preloadedComments] = await Promise.all([
+  const token = await getToken();
+  const [post, preloadedComments, userId] = await Promise.all([
     await fetchQuery(api.posts.getPostById, { postId }),
     await preloadQuery(api.comments.getCommentsByPostId, { postId: postId }),
+    await fetchQuery(api.presence.getUserId, {}, { token }),
   ]);
 
   if (!post)
@@ -77,7 +81,7 @@ export default async function PostIdRoute({ params }: PostIdRouteProps) {
           sizes="100vw"
           className="w-full h-[80vh] object-cover rounded-lg"
         />
-        <div className="absolute bottom-0 w-full flex justify-between p-10 backdrop-blur-[2px]">
+        <div className="absolute bottom-0 w-full flex justify-between p-10 backdrop-blur-[2px] bg-black/50">
           <div className="flex gap-10 text-white">
             <div className="space-y-1">
               <p className="text-sm">Written By</p>
@@ -88,6 +92,10 @@ export default async function PostIdRoute({ params }: PostIdRouteProps) {
               <p className="font-semibold">
                 {new Date(post._creationTime).toLocaleDateString()}
               </p>
+            </div>
+            <div className="">
+              <p className="text-sm">Reading Now</p>
+              {userId && <PostPresence roomId={post._id} userId={userId} />}
             </div>
           </div>
           <div className="flex items-center gap-3">
