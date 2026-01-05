@@ -58,7 +58,7 @@ export function CommentSection(props: {
             alt=""
             className="rounded-full w-8 h-8 object-cover"
           />
-          <h3 className="font-semibold">John Doe</h3>
+          <h3 className="font-semibold">{data[0]?.authorName}</h3>
         </div>
         <form
           className="flex items-center gap-2"
