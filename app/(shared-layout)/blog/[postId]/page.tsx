@@ -12,11 +12,24 @@ import {
   Linkedin,
   Twitter,
 } from "lucide-react";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
 interface PostIdRouteProps {
   params: Promise<{ postId: Id<"posts"> }>;
+}
+
+export async function generateMetadata({
+  params,
+}: PostIdRouteProps): Promise<Metadata> {
+  const { postId } = await params;
+  const post = await fetchQuery(api.posts.getPostById, { postId });
+  if (!post) return { title: "Post not found" };
+  return {
+    title: post.title,
+    description: post.body,
+  };
 }
 
 export default async function PostIdRoute({ params }: PostIdRouteProps) {

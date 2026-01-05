@@ -1,4 +1,3 @@
-import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,14 +6,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BlogCard } from "@/components/web/blogCard";
-import { api, components } from "@/convex/_generated/api";
+import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
 import { ChevronDown } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 
 export const dynamic = "force-static";
 export const revalidate = 10;
+
+export const metadata: Metadata = {
+  title: "Blogs - Latest Articles",
+  description: "Read our blog posts on various topics.",
+};
 
 export default function BlogPage() {
   const navLink = [
