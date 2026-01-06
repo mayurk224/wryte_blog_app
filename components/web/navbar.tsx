@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Loader2, Search } from "lucide-react";
+import { SearchInput } from "./SearchInput";
 
 export function Navbar() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -18,7 +19,7 @@ export function Navbar() {
   const navLink = [
     {
       name: "Recent",
-      href: "/",
+      href: "/blog",
     },
     {
       name: "Technology",
@@ -38,7 +39,7 @@ export function Navbar() {
     },
   ];
   return (
-    <nav className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 z-50 backdrop-blur-md">
+    <nav className="fixed top-0 left-0 right-0 flex justify-between items-center p-4 z-50 backdrop-blur-md px-10 border-b">
       <div className="leftSide flex items-center gap-3">
         <Link href="/">
           <div className="flex items-center">
@@ -51,7 +52,8 @@ export function Navbar() {
             <Link
               key={item.name}
               href={item.href}
-              className="text-muted-foreground hover:text-primary data-[active=true]:text-primary flex h-7 items-center justify-center px-4 text-center text-base font-medium transition-colors" data-active="false"
+              className="text-muted-foreground hover:text-primary data-[active=true]:text-primary flex h-7 items-center justify-center px-4 text-center text-base font-medium transition-colors"
+              data-active="false"
             >
               <span className="text-sm font-medium">{item.name}</span>
             </Link>
@@ -59,14 +61,7 @@ export function Navbar() {
         </div>
       </div>
       <div className="rightSide flex items-center gap-3">
-        <div className="flex items-center relative">
-          <Search className="absolute left-3" />
-          <input
-            type="text"
-            placeholder="Search an article..."
-            className="p-2 rounded-full border border-input w-80 pl-10"
-          />
-        </div>
+        <SearchInput />
 
         {isLoading ? null : isAuthenticated ? (
           <>
