@@ -14,15 +14,10 @@ import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
 import { Suspense } from "react";
 
-// export const dynamic = "force-static";
-// export const revalidate = 10;
-
 export const metadata: Metadata = {
   title: "Blogs - Latest Articles",
   description: "Read our blog posts on various topics.",
 };
-
-export const dynamic = "force-dynamic";
 
 export default function BlogPage() {
   const navLink = [
