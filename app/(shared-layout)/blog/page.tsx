@@ -225,6 +225,8 @@ export default function BlogPage() {
   );
 }
 
+export const dynamic = 'force-dynamic';
+
 async function LoadingBlog() {
   "use cache";
   cacheLife("hours");
