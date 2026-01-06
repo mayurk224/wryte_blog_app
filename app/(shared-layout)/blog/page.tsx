@@ -4,13 +4,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
-import { BlogCard } from "@/components/web/blogCard";
-import { api } from "@/convex/_generated/api";
-import { fetchQuery } from "convex/nextjs";
+import BlogPostsList from "./components/blog-posts-list";
+import BlogSidebar from "./components/blog-sidebar";
 import { ChevronDown } from "lucide-react";
 import { Metadata } from "next";
-import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -209,67 +206,39 @@ export default function BlogPage() {
           fallback={
             <div className="flex items-center flex-wrap gap-5 justify-center">
               {[...Array(8)].map((_, index) => (
-                <BlogCardSkeleton key={index} />
+                <div key={index} className="max-w-sm">
+                  <div className="rounded-xl bg-muted/30 p-2 shadow-sm">
+                    <div className="h-56 w-80 rounded-2xl bg-muted animate-pulse" />
+                    <div className="p-3 space-y-4">
+                      <div className="flex items-center gap-2">
+                        <div className="h-4 w-20 bg-muted animate-pulse rounded" />
+                        <div className="h-4 w-4 rounded-full bg-muted animate-pulse" />
+                        <div className="h-4 w-24 bg-muted animate-pulse rounded" />
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-6 w-full bg-muted animate-pulse rounded" />
+                        <div className="h-6 w-5/6 bg-muted animate-pulse rounded" />
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-4 w-full bg-muted animate-pulse rounded" />
+                        <div className="h-4 w-full bg-muted animate-pulse rounded" />
+                        <div className="h-4 w-4/5 bg-muted animate-pulse rounded" />
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full bg-muted animate-pulse" />
+                        <div className="h-4 w-32 bg-muted animate-pulse rounded" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           }
         >
-          <LoadingBlog />
+          <BlogPostsList />
         </Suspense>
       </section>
     </div>
   );
 }
 
-async function LoadingBlog() {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("blog");
-  const data = await fetchQuery(api.posts.getPosts);
-  return (
-    <div className="flex flex-wrap gap-5 w-full mx-auto">
-      {data?.map((post) => (
-        <BlogCard key={post._id} post={post} />
-      ))}
-    </div>
-  );
-}
-
-function BlogCardSkeleton() {
-  return (
-    <div className="max-w-sm">
-      <div className="rounded-xl bg-muted/30 p-2 shadow-sm">
-        {/* Image */}
-        <Skeleton className="h-56 w-80 rounded-2xl" />
-
-        <div className="p-3 space-y-4">
-          {/* Date + Read Time */}
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-4 w-20" />
-            <Skeleton className="h-4 w-4 rounded-full" />
-            <Skeleton className="h-4 w-24" />
-          </div>
-
-          {/* Title */}
-          <div className="space-y-2">
-            <Skeleton className="h-6 w-full" />
-            <Skeleton className="h-6 w-5/6" />
-          </div>
-
-          {/* Description */}
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-4/5" />
-          </div>
-
-          {/* Author */}
-          <div className="flex items-center gap-3">
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <Skeleton className="h-4 w-32" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
