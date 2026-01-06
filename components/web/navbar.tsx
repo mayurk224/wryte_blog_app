@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Loader2, Search } from "lucide-react";
+import { SearchInput } from "./SearchInput";
 
 export function Navbar() {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -60,14 +61,7 @@ export function Navbar() {
         </div>
       </div>
       <div className="rightSide flex items-center gap-3">
-        <div className="flex items-center relative">
-          <Search className="absolute left-3" />
-          <input
-            type="text"
-            placeholder="Search an article..."
-            className="p-2 rounded-full border border-input w-80 pl-10"
-          />
-        </div>
+        <SearchInput />
 
         {isLoading ? null : isAuthenticated ? (
           <>
