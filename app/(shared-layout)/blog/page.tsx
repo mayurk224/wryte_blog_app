@@ -12,7 +12,6 @@ import { ChevronDown } from "lucide-react";
 import { Metadata } from "next";
 import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
-import { connection } from "next/server";
 import { Suspense } from "react";
 
 // export const dynamic = "force-static";
@@ -22,6 +21,8 @@ export const metadata: Metadata = {
   title: "Blogs - Latest Articles",
   description: "Read our blog posts on various topics.",
 };
+
+export const dynamic = "force-dynamic";
 
 export default function BlogPage() {
   const navLink = [
@@ -224,8 +225,6 @@ export default function BlogPage() {
     </div>
   );
 }
-
-export const dynamic = 'force-dynamic';
 
 async function LoadingBlog() {
   "use cache";
