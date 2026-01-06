@@ -34,10 +34,15 @@ export const getPosts = query({
     const posts = await ctx.db.query("posts").order("desc").collect();
     return await Promise.all(
       posts.map(async (post) => {
-        const resolveImageUrl =
-          post.imageStorageId !== undefined
-            ? await ctx.storage.getUrl(post.imageStorageId)
-            : null;
+        let resolveImageUrl = null;
+        if (post.imageStorageId !== undefined) {
+          try {
+            resolveImageUrl = await ctx.storage.getUrl(post.imageStorageId);
+          } catch (error) {
+            console.error(`Error getting storage URL for post ${post._id}:`, error);
+            resolveImageUrl = null;
+          }
+        }
 
         return {
           ...post,
@@ -45,7 +50,6 @@ export const getPosts = query({
         };
       })
     );
-    return posts;
   },
 });
 
