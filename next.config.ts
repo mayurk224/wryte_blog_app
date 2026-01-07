@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
         hostname: "fortunate-ostrich-916.convex.cloud",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "honorable-goldfinch-700.convex.cloud",
+        port: "",
+      },
     ],
   },
 };
