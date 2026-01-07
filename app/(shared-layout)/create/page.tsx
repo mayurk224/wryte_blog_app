@@ -35,11 +35,23 @@ export default function CreatePage() {
 
   const router = useRouter();
 
-  function onSubmit(values: z.infer<typeof postSchema>) {
+  async function onSubmit(values: z.infer<typeof postSchema>) {
     startTransition(async () => {
-      await createBlogAction(values);
-      toast.success("Article created successfully");
-      router.push("/");
+      const result = await createBlogAction(values);
+      if (
+        result &&
+        typeof result === "object" &&
+        "success" in result &&
+        result.success === true
+      ) {
+        toast.success(result.message || "Article created successfully");
+        // Wait a moment for the toast to show before redirecting
+        setTimeout(() => {
+          router.push("/blog");
+        }, 1000);
+      } else if (result && typeof result === "object" && "error" in result) {
+        toast.error(result.error || "Failed to create article");
+      }
     });
   }
   return (

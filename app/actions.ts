@@ -13,7 +13,7 @@ export async function createBlogAction(values: z.infer<typeof postSchema>) {
     const parsed = postSchema.safeParse(values);
 
     if (!parsed.success) {
-      throw new Error("Something went wrong");
+      return { error: "Validation failed" };
     }
 
     const token = await getToken();
@@ -48,10 +48,11 @@ export async function createBlogAction(values: z.infer<typeof postSchema>) {
       },
       { token }
     );
-  } catch {
+  } catch (error) {
+    console.error("Error creating blog post:", error);
     return { error: "Failed to create post" };
   }
 
   updateTag("blog");
-  return redirect("/");
+  return { success: true, message: "Article created successfully" };
 }
